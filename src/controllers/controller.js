@@ -2,6 +2,7 @@ require('../model/db/conn');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
+const cookieParser = require('cookie-parser');
 const userDB = require('../model/schema/userSchema.js');
 const imageDB = require('../model/schema/imageSchema.js');
 const dotenv = require('dotenv');
@@ -31,7 +32,6 @@ const uploadImage = async (req, res) => {
                    }
                 }) 
                 const imgUploaded = await newImage.save()
-                console.log(imgUploaded)
                 if (imgUploaded) {
                     res.status(200).send({
                         status: 200,
@@ -53,7 +53,6 @@ const uploadImage = async (req, res) => {
 const getImage = async (req ,res) => {
     try {
         let id = req.params.id
-        console.log(`id is ---> ${id}`)
         let imgResult = await imageDB.find({ _id: id })
         if(imgResult)
             res.status(200).send(imgResult);
