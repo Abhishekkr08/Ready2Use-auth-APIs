@@ -6,11 +6,13 @@ const middleware = require('../middleware/auth')
 
 router.get('/home',middleware, appControllers.homepage)
 
-router.post('/signup', appControllers.signup);
+router.post('/register', appControllers.signup);
 
-router.post('/signin', appControllers.signin);
+router.post('/login', appControllers.signin);
 
-router.post('/upload', appControllers.uploadImage);
+router.post('/upload', middleware, appControllers.uploadImage);
+
+router.get('/:id', middleware, appControllers.getImage);
 
 router.get('/verify-email',appControllers.verifyEmail);
 

@@ -50,8 +50,20 @@ const uploadImage = async (req, res) => {
     }
 }
 
-const getImage = () => {
-    
+const getImage = async (req ,res) => {
+    try {
+        let id = req.params.id
+        console.log(`id is ---> ${id}`)
+        let imgResult = await imageDB.find({ _id: id })
+        if(imgResult)
+            res.status(200).send(imgResult);
+        else {
+            res.status(501).send({status : 501 , message : "no image with id"});
+        }
+    }
+    catch {
+        res.status(400).send({status : 501 , message : "some error occurred"});
+    }
 }
 
 const homepage = (req, res) => {
@@ -258,4 +270,4 @@ const wrnURL = (req, res) => {
     res.send('<h1>This Page doesn\'t exist🚫</h1>');
 }
 
-module.exports = { uploadImage,homepage, signup, signin, verifyEmail, wrnURL };
+module.exports = { uploadImage,homepage, signup, signin, verifyEmail, wrnURL , getImage };
